@@ -17,15 +17,17 @@
 
 package opennlp.tools.langdetect;
 
-/**
- * The interface for LanguageDetector which provide the @{@link Language} according to the context.
- */
-public interface LanguageDetector {
 
-  Language[] predictLanguages(CharSequence content);
+public class DummyFactory extends LanguageDetectorFactory {
 
-  Language predictLanguage(CharSequence content);
 
-  String[] getSupportedLanguages();
+  public DummyFactory() {
+
+  }
+
+  @Override
+  public void init() {
+    super.init();
+  }
 
 }

@@ -20,39 +20,41 @@ package opennlp.tools.langdetect;
 import java.util.Objects;
 
 /**
- * Class for holding the document language and its confidence
+ * Class which holds a classified document and its @{@link Language}.
  */
-public class Language {
-  private final String lang;
-  private final double confidence;
+public class LanguageDetectorSample {
 
-  public Language(String lang) {
-    this(lang, 0);
+  private final Language language;
+  private final CharSequence context;
+
+  public LanguageDetectorSample(Language language, CharSequence context) {
+    Objects.requireNonNull(context, "context must not be null");
+    Objects.requireNonNull(language, "language must not be null");
+    this.language = language;
+    this.context = context;
   }
 
-  public Language(String lang, double confidence) {
-    Objects.requireNonNull(lang, "lang must not be null");
-    this.lang = lang;
-    this.confidence = confidence;
+  public Language getLanguage() {
+    return language;
   }
 
-  public String getLang() {
-    return lang;
-  }
-
-  public double getConfidence() {
-    return confidence;
+  public CharSequence getContext() {
+    return context;
   }
 
   @Override
   public String toString() {
 
-    return getLang();
+    StringBuilder sampleString = new StringBuilder();
+
+    sampleString.append(language.getLang()).append('\t').append(context);
+
+    return sampleString.toString();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getLang(), getConfidence());
+    return Objects.hash(getContext(), getLanguage());
   }
 
   @Override
@@ -61,11 +63,11 @@ public class Language {
       return true;
     }
 
-    if (obj instanceof Language) {
-      Language a = (Language) obj;
+    if (obj instanceof LanguageDetectorSample) {
+      LanguageDetectorSample a = (LanguageDetectorSample) obj;
 
-      return getLang().equals(a.getLang())
-          && getConfidence() == a.getConfidence();
+      return getLanguage().equals(a.getLanguage())
+          && getContext().equals(a.getContext());
     }
 
     return false;
